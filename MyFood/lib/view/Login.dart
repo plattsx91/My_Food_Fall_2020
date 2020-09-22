@@ -25,8 +25,8 @@ class MyLogin extends StatefulWidget {
 class LoginState extends State<MyLogin> {
   final userController = TextEditingController();
   final passwordController = TextEditingController();
-  final bool userCheck = false;
-  final bool passCheck = false;
+  final bool userCheck = true;
+  final bool passCheck = true;
   Future<void> invalidInput(String statement) async {
     return showDialog<void>(
       context: context,
