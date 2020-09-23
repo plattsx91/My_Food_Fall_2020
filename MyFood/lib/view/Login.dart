@@ -3,9 +3,16 @@ import './Register.dart';
 import './ForgotPassword.dart';
 import './Menu.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:path/path.dart' show join;
+import 'package:path_provider/path_provider.dart';
 
 class MyLogin extends StatefulWidget {
-  MyLogin({Key key, this.title}) : super(key: key);
+  final camera;
+  MyLogin({Key key, this.title, this.camera,}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -85,7 +92,7 @@ class LoginState extends State<MyLogin> {
         if(passCheck){
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Menu())
+              MaterialPageRoute(builder: (context) => Menu(camera: widget.camera,))
           );
         }
         else if(password == ''){
@@ -227,7 +234,7 @@ class LoginState extends State<MyLogin> {
                           onPressed:(){
                             Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ForgotPassword())
+                                MaterialPageRoute(builder: (context) => Register())
                             );
                           },
                           child: Center(
