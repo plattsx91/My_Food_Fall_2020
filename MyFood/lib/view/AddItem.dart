@@ -1,6 +1,3 @@
-import './Login.dart';
-import './Camera.dart';
-import './Menu.dart';
 import 'package:flutter/material.dart';
 
 class AddItem extends StatefulWidget {
@@ -21,16 +18,10 @@ class AddItemState extends State<AddItem> {
 
   void submit(String itemName, String expDate, String quantity) {
     setState(() {
-      //Will send the username and password to the back end
-      //It will then get back a bool for the username first
-      //If username exists, then will give back a bool for the password
-      //If both are true, then go to the user's menu
-      //If even one is false, the user must re input the Username and/or Password
       if (itemName != '') {
         if (expDate != '') {
           if (quantity != '') {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Menu()));
+            Navigator.pop(context);
           } else {
             invalidInput("No Quantity Received");
           }
@@ -233,111 +224,3 @@ class AddItemState extends State<AddItem> {
     );
   }
 }
-/*
-              The Code here is for when/if we want to add a description to an Item
-              Container(
-                width: 242,
-                height: 32,
-                color: Colors.orange[700],
-                child: Center(
-                  child: Text(
-                  "Notes",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                ),
-              ),
-
-              Container(
-                width: 242,
-                height: 320,
-                child: Column(
-                children: [
-                  TextFormField(
-                  controller: descriptionController,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(fontSize: 16.0, color: Colors.black),
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                      // borderRadius: BorderRadius.circular(5.0)
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(width: 2, color: Colors.orange[700]),
-                    ),
-                  ),
-                ),
-                  TextFormField(
-                    controller: descriptionController,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(fontSize: 16.0, color: Colors.black),
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                        // borderRadius: BorderRadius.circular(5.0)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                        BorderSide(width: 2, color: Colors.orange[700]),
-                      ),
-                    ),
-                  ),
-                  TextFormField(
-                    controller: descriptionController,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(fontSize: 16.0, color: Colors.black),
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                        // borderRadius: BorderRadius.circular(5.0)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                        BorderSide(width: 2, color: Colors.orange[700]),
-                      ),
-                    ),
-                  ),
-                  TextFormField(
-                    controller: descriptionController,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(fontSize: 16.0, color: Colors.black),
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                        // borderRadius: BorderRadius.circular(5.0)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                        BorderSide(width: 2, color: Colors.orange[700]),
-                      ),
-                    ),
-                  ),
-                  TextFormField(
-                    controller: descriptionController,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(fontSize: 16.0, color: Colors.black),
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                        // borderRadius: BorderRadius.circular(5.0)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                        BorderSide(width: 2, color: Colors.orange[700]),
-                      ),
-                    ),
-                  ),
-                ],
-                ),
-              ),*/
