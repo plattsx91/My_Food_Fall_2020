@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "776563068253",
+    "firebase_url": "https://myfood-70b13.firebaseio.com",
+    "project_id": "myfood-70b13",
+    "storage_bucket": "myfood-70b13.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776563068253:android:bd59f282592725e0f46cb4",
+        "android_client_info": {
+          "package_name": "com.example.MyFood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776563068253-m6r051b5jk95587l1rev6fdgrvrce476.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAip0wDx5yzJZ9Bld6E5u3Ioyaja6Kti5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "776563068253-m6r051b5jk95587l1rev6fdgrvrce476.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "776563068253-te7cio7anjcar2q792tgjutqtgkba7kl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.MyFood.mikemertens"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
