@@ -74,7 +74,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   ),
                 ),
               ),
-              RaisedButton(
+              ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       FirebaseAuth.instance
@@ -91,7 +91,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             content: Text(
                                 "Please check you email and click the link to reset password."),
                             actions: <Widget>[
-                              FlatButton(
+                              TextButton(
                                 child: Text("Okay"),
                                 onPressed: () {
                                   Navigator.push(
@@ -106,7 +106,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       );
                     } //Send user email for password
                   },
-                  color: Colors.orange[700],
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.orange[700], // background
+                    onPrimary: Colors.white, // foreground
+                  ),
                   child: Center(
                     child: Text(
                       "Submit",
@@ -116,11 +119,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       ),
                     ),
                   )),
-              RaisedButton(
+              ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  color: Colors.orange[700],
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.orange[700], // background
+                    onPrimary: Colors.white, // foreground
+                  ),
                   child: Center(
                     child: Text(
                       "Cancel",

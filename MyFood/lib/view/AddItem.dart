@@ -64,7 +64,7 @@ class AddItemState extends State<AddItem> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(
                 'Understood',
                 style: TextStyle(
@@ -198,12 +198,15 @@ class AddItemState extends State<AddItem> {
                     width: 164,
                     child: Material(
                       borderRadius: BorderRadius.circular(5),
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: () {
                           submit(itemNameController.text, dateController.text,
                               quantityController.text);
                         },
-                        color: Colors.orange[700],
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.orange[700], // background
+                          onPrimary: Colors.white, // foreground
+                        ),
                         child: Center(
                           child: Text('Add Item',
                               style: TextStyle(
