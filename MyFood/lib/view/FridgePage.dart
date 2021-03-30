@@ -2,7 +2,7 @@ import 'package:MyFoodLogin/view/MainPage.dart';
 import 'package:flutter/material.dart';
 import 'package:MyFoodLogin/view/FreezerPage.dart';
 import 'package:MyFoodLogin/view/PantryPage.dart';
-import 'package:MyFoodLogin/view/PerishablesPage.dart';
+import 'package:MyFoodLogin/view/AllFoodPage.dart';
 import 'package:MyFoodLogin/view/DairyPage.dart';
 import 'package:MyFoodLogin/view/ProducePage.dart';
 import 'MeatPage.dart';

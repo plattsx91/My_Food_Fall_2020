@@ -1,16 +1,17 @@
 import 'package:MyFoodLogin/view/FridgePage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class PantryPage extends StatefulWidget {
-  PantryPage({Key key}) : super(key: key);
+class AllFoodPage extends StatefulWidget {
+  AllFoodPage({Key key}) : super(key: key);
 
   @override
-  _PantryPageState createState() => _PantryPageState();
+  _AllFoodPageState createState() => _AllFoodPageState();
 }
 
-class _PantryPageState extends State<PantryPage> {
+class _AllFoodPageState extends State<AllFoodPage> {
   DateTime _dateTime;
 
   //FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -25,12 +26,8 @@ class _PantryPageState extends State<PantryPage> {
     final User user = auth.currentUser;
     final uid = user.uid;
 
-    QuerySnapshot qn = await db
-        .collection("Users")
-        .doc(uid)
-        .collection("Drawer")
-        .where("Type", isEqualTo: "Pantry")
-        .get();
+    QuerySnapshot qn =
+        await db.collection("Users").doc(uid).collection("Drawer").get();
 
     return qn.docs;
   }
@@ -47,12 +44,7 @@ class _PantryPageState extends State<PantryPage> {
           .doc(uid) // user,user.uid
           .collection("Drawer")
           .doc(name)
-          .set({
-        "Name": name,
-        "Type": "Pantry",
-        "Amount": amount,
-        "ExpDate": expdate
-      });
+          .set({"Name": name, "Amount": amount, "ExpDate": expdate});
     });
   }
 
@@ -309,7 +301,7 @@ class _PantryPageState extends State<PantryPage> {
                           height: deviceHeight * .707,
                           decoration: BoxDecoration(
                               //color: Color(0xff3f6576),
-                              color: Colors.brown[300],
+                              color: Colors.orange[300],
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(15),
                                 topRight: Radius.circular(15),
