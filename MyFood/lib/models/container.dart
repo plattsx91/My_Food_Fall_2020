@@ -6,11 +6,13 @@ class FridgeContainer{
   String name;
   FridgeContainer(){
     mapIndex = new Map<String,int>();
+    // ignore: deprecated_member_use
     listOfFood = new List<Food>();
     name="default";
   }
   FridgeContainer.withName(String name){
     mapIndex = new Map<String,int>();
+    // ignore: deprecated_member_use
     listOfFood = new List<Food>();
     this.name=name;
   }

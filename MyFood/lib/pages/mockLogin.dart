@@ -67,11 +67,14 @@ class LoginScreen extends StatelessWidget {
               width: 130,
               child: Material(
                 borderRadius: BorderRadius.circular(5.0),
-                child: RaisedButton(
+                child: ElevatedButton(
                     onPressed: () {
                       print("You have logged in!");
                     },
-                    color: Colors.orange[700],
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.orange[700], // background
+                      onPrimary: Colors.white, // foreground
+                    ),
                     child: Center(
                       child: Text(
                         "Login",

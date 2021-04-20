@@ -31,10 +31,13 @@ class _AddRemoveListViewState extends State<AddRemoveListView> {
               ),
             ),
           
-          RaisedButton(
+          ElevatedButton(
             onPressed: _onSubmit,
             child: Text('Add to List'),
-            color: Colors.red,
+            style: ElevatedButton.styleFrom(
+              primary: Colors.red, // background
+              onPrimary: Colors.white, // foreground
+            ),
           ),
         
           SizedBox(height: 20.0),
