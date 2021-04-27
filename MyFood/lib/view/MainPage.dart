@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './FridgePage.dart';
+import 'BarcodeScanPage.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -24,7 +25,10 @@ class _MainPageState extends State<MainPage> {
               IconButton(
                 icon: Image.asset('assets/images/user.png'),
                 iconSize: 200,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => BarcodeScanPage()));
+                },
               )
             ],
           ),
