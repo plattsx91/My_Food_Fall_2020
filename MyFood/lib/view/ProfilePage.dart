@@ -277,7 +277,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       buttonIcon: Icon(Icons.local_dining),
                       cancelText: Text("Cancel"),
                       confirmText: Text("OK"),
-                      initialValue: _allergies,
+                      //initialValue: _allergies,
                       decoration: BoxDecoration(
                           border: Border(
                         bottom: BorderSide(
