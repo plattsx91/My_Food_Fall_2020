@@ -17,13 +17,10 @@ TextEditingController amountController = TextEditingController();
 DateTime dateTime;
 
 class _FreezerPageState extends State<FreezerPage> {
-  
-
   //FirebaseFirestore db = FirebaseFirestore.getInstance();
 
   //Initialize the database, text controller for food item, and amount controller for food item
   FirebaseAuth auth = FirebaseAuth.instance;
-
 
 //Ask for all of the food items from the current user
   Future getPosts() async {
@@ -175,11 +172,11 @@ class _FreezerPageState extends State<FreezerPage> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  title: Text(_textController.text),
+                                  title: Text(textController.text),
                                   content: SingleChildScrollView(
                                       child: ListBody(children: <Widget>[
                                     TextField(
-                                      controller: _amountController,
+                                      controller: amountController,
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                           filled: true,
@@ -223,7 +220,7 @@ class _FreezerPageState extends State<FreezerPage> {
                                                 lastDate: DateTime(2100))
                                             .then((expdate) {
                                           setState(() {
-                                            _dateTime = expdate;
+                                            dateTime = expdate;
                                           });
                                         });
                                       },
@@ -236,10 +233,10 @@ class _FreezerPageState extends State<FreezerPage> {
                                     //Submit Button
                                     InkWell(
                                       onTap: () {
-                                        onSubmit(_textController.text,
-                                            _amountController.text, _dateTime);
+                                        onSubmit(textController.text,
+                                            amountController.text, dateTime);
                                         Navigator.of(context).pop();
-                                        _textController.clear();
+                                        textController.clear();
                                       },
                                       child: Container(
                                           height: deviceHeight * .05,
