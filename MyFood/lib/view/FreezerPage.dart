@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 class FreezerPage extends StatefulWidget {
   FreezerPage({Key key}) : super(key: key);
@@ -42,7 +43,7 @@ class _FreezerPageState extends State<FreezerPage> {
 
 //Function that is called when a new item is submitted.
 //Submits the new food item from the text controller to the current user and setting its type to freezer
-  onSubmit(String name, String amount, String expdate) {
+  onSubmit(String name, String amount, DateTime expdate) {
     final User user = auth.currentUser;
     final uid = user.uid;
     // print(date);
@@ -171,11 +172,116 @@ class _FreezerPageState extends State<FreezerPage> {
                         onTap: () {
                           //Amount Alert
                           showDialog(
-                            context: context,
-                            builder: (context) {
-                              return MyDialog();
-                            }
-                          );
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text(_textController.text),
+                                  content: SingleChildScrollView(
+                                      child: ListBody(children: <Widget>[
+                                    TextField(
+                                      controller: _amountController,
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: Color(0xffe0f7f3),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.black,
+                                                width: 3.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.blue, width: 3.0),
+                                          ),
+                                          hintText: 'Set Amount'),
+                                    ),
+                                    // Drop down UOM goes here
+                                    new DropdownButton<String>(
+                                      items: <String>[
+                                        'Boxes',
+                                        'Bags',
+                                        'Pounds',
+                                        'Ounces'
+                                      ].map((String value) {
+                                        return new DropdownMenuItem<String>(
+                                          value: value,
+                                          child: new Text(value),
+                                        );
+                                      }).toList(),
+                                      onChanged: (_) {},
+                                    )
+                                  ])),
+                                  actions: <Widget>[
+                                    //Expiration date picker
+                                    ElevatedButton(
+                                      child: Text('Expiration Date'),
+                                      onPressed: () {
+                                        showDatePicker(
+                                                context: context,
+                                                initialDate: DateTime.now(),
+                                                firstDate: DateTime(2021),
+                                                lastDate: DateTime(2100))
+                                            .then((expdate) {
+                                          setState(() {
+                                            _dateTime = expdate;
+                                          });
+                                        });
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.red, // background
+                                        onPrimary: Colors.white, // foreground
+                                      ),
+                                    ),
+
+                                    //Submit Button
+                                    InkWell(
+                                      onTap: () {
+                                        onSubmit(_textController.text,
+                                            _amountController.text, _dateTime);
+                                        Navigator.of(context).pop();
+                                        _textController.clear();
+                                      },
+                                      child: Container(
+                                          height: deviceHeight * .05,
+                                          width: deviceWidth * .15,
+                                          decoration: BoxDecoration(
+                                              color: Colors.green[300],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                          child: Center(
+                                            child: Text(
+                                              "Submit",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
+                                            ),
+                                          )),
+                                    ),
+
+                                    //Cancel Button
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Container(
+                                          height: deviceHeight * .05,
+                                          width: deviceWidth * .15,
+                                          decoration: BoxDecoration(
+                                              color: Colors.red[300],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                          child: Center(
+                                            child: Text(
+                                              "Cancel",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
+                                            ),
+                                          )),
+                                    )
+                                  ],
+                                );
+                              });
                         },
                         //Actual "+" button
                         child: Container(
@@ -272,8 +378,13 @@ class _FreezerPageState extends State<FreezerPage> {
                                                                     "ExpDate") ==
                                                             null
                                                         ? 'No expiration date'
-                                                        : snapshot.data[index]
-                                                            .get("ExpDate")),
+                                                        : DateFormat(
+                                                                'MM/dd/yyyy')
+                                                            .format(snapshot
+                                                                .data[index]
+                                                                .get("ExpDate")
+                                                                .toDate())
+                                                            .toString()),
 
                                                     //Submit Button
                                                     InkWell(
@@ -378,163 +489,5 @@ class _FreezerPageState extends State<FreezerPage> {
                 ),
               ],
             )));
-  }
-}
-
-class MyDialog extends StatefulWidget { 
-  @override
-  _MyDialogState createState() {
-    return new _MyDialogState();
-  }
-}
-
-class _MyDialogState extends State<MyDialog> {
-
-  //Function that is called when a new item is submitted.
-  //Submits the new food item from the text controller to the current user and setting its type to freezer
-  onSubmit(String name, String amount, String expdate) {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    final User user = auth.currentUser;
-    final uid = user.uid;
-    // print(date);
-    setState(() {
-      FirebaseFirestore.instance
-          .collection("Users")
-          .doc(uid) // user,user.uid
-          .collection("Drawer")
-          .doc(name)
-          .set({
-        "Name": name,
-        "Type": "Freezer",
-        "Amount": amount,
-        "ExpDate": expdate
-      });
-    });
-  }
-
-  String _selectedValue; // this string holds quantity type
-  Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
-    return AlertDialog(
-      title: Text(textController.text),
-      content: SingleChildScrollView(
-          child: ListBody(children: <Widget>[
-        TextField(
-          controller: amountController,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-              filled: true,
-              fillColor: Color(0xffe0f7f3),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: Colors.black,
-                    width: 3.0),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: Colors.blue, width: 3.0),
-              ),
-              hintText: 'Set Amount'),
-        ),
-
-        // Drop down UOM goes here
-        new DropdownButton<String>(
-
-          hint: Text('Boxes'),
-          value: _selectedValue,
-          items: <String>['Boxes', 'Bags', 'Pounds', 'Ounces']
-          .map((String value) {
-            return new DropdownMenuItem<String>(
-              value: value,
-              child: new Text(value),
-            );
-          }).toList(),
-
-          onChanged: (String val) {
-            setState(() {
-              _selectedValue = val;
-            });
-          }, //onChanged
-
-        ),
-        
-                        
-
-      ])),
-      actions: <Widget>[
-        //Expiration date picker
-        ElevatedButton(
-          child: Text('Expiration Date'),
-          onPressed: () {
-            showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2021),
-                    lastDate: DateTime(2100))
-                .then((expdate) {
-              setState(() {
-                dateTime = expdate;
-              });
-            });
-          },
-          style: ElevatedButton.styleFrom(
-            primary: Colors.red, // background
-            onPrimary: Colors.white, // foreground
-          ),
-        ),
-
-        //Submit Button
-        InkWell(
-          onTap: () {
-            onSubmit(
-                textController.text,
-                amountController.text,
-                dateTime
-                    .toString()
-                    .substring(0, 10));
-            Navigator.of(context).pop();
-            textController.clear();
-          },
-          child: Container(
-              height: deviceHeight * .05,
-              width: deviceWidth * .15,
-              decoration: BoxDecoration(
-                  color: Colors.green[300],
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(10))),
-              child: Center(
-                child: Text(
-                  "Submit",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              )),
-        ),
-
-        //Cancel Button
-        InkWell(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-              height: deviceHeight * .05,
-              width: deviceWidth * .15,
-              decoration: BoxDecoration(
-                  color: Colors.red[300],
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(10))),
-              child: Center(
-                child: Text(
-                  "Cancel",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              )),
-        )
-      ],
-    );
   }
 }

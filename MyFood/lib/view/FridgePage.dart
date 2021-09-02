@@ -14,6 +14,16 @@ class FridgePage extends StatefulWidget {
   _FridgePageState createState() => _FridgePageState();
 }
 
+class StatusDialog extends StatefulWidget {
+  State<StatefulWidget> createState() {
+    return StatusDialogState();
+  }
+}
+
+class StatusDialogState extends State<StatusDialog> {
+  Widget build(BuildContext context) {}
+}
+
 class _FridgePageState extends State<FridgePage> {
   @override
   Widget build(BuildContext context) {

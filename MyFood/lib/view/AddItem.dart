@@ -226,4 +226,3 @@ class AddItemState extends State<AddItem> {
       ),
     );
   }
-}
