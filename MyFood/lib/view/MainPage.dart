@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'ProfilePage.dart';
+import 'BarcodeScanPage.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -94,7 +95,7 @@ class _MainPageState extends State<MainPage> {
                 iconSize: deviceHeight * .28,
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ProfilePage()));
+                      MaterialPageRoute(builder: (context) => BarcodeScanPage()));
                 },
               )
             ],
