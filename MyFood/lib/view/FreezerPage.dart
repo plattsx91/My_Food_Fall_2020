@@ -1,10 +1,9 @@
 import 'package:MyFoodLogin/view/FridgePage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
+import 'package:intl/intl.dart';
 
 class FreezerPage extends StatefulWidget {
   FreezerPage({Key key}) : super(key: key);
@@ -13,25 +12,17 @@ class FreezerPage extends StatefulWidget {
   _FreezerPageState createState() => _FreezerPageState();
 }
 
-class PushMessage extends StatefulWidget{
-  @override
-  _FreezerPageState createState() => _FreezerPageState();
-}
-
 class _FreezerPageState extends State<FreezerPage> {
   DateTime _dateTime;
+
+  //FirebaseFirestore db = FirebaseFirestore.getInstance();
 
   //Initialize the database, text controller for food item, and amount controller for food item
   FirebaseAuth auth = FirebaseAuth.instance;
   TextEditingController _textController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
 
-
-  @override
-  void initState(){
-    super.initState(); 
-  }
-  //Ask for all of the food items from the current user
+//Ask for all of the food items from the current user
   Future getPosts() async {
     var db = FirebaseFirestore.instance;
     final User user = auth.currentUser;
@@ -47,9 +38,9 @@ class _FreezerPageState extends State<FreezerPage> {
     return qn.docs;
   }
 
-  //Function that is called when a new item is submitted.
-  //Submits the new food item from the text controller to the current user and setting its type to freezer
-  onSubmit(String name, String amount, String expdate) {
+//Function that is called when a new item is submitted.
+//Submits the new food item from the text controller to the current user and setting its type to freezer
+  onSubmit(String name, String amount, DateTime expdate) {
     final User user = auth.currentUser;
     final uid = user.uid;
     // print(date);
@@ -68,8 +59,8 @@ class _FreezerPageState extends State<FreezerPage> {
     });
   }
 
-  //Function that is called when submitting a new amount for a food item.
-  //Sets the new amount of the current item for the current user to what is in the amount text field
+//Function that is called when submitting a new amount for a food item.
+//Sets the new amount of the current item for the current user to what is in the amount text field
   changeAmount(String item) {
     final User user = auth.currentUser;
     final uid = user.uid;
@@ -84,7 +75,7 @@ class _FreezerPageState extends State<FreezerPage> {
     _amountController.clear();
   }
 
-  //Deletes the current food item
+//Deletes the current food item
   deleteItem(String item) {
     final User user = auth.currentUser;
     final uid = user.uid;
@@ -242,12 +233,8 @@ class _FreezerPageState extends State<FreezerPage> {
                                     //Submit Button
                                     InkWell(
                                       onTap: () {
-                                        onSubmit(
-                                            _textController.text,
-                                            _amountController.text,
-                                            _dateTime
-                                                .toString()
-                                                .substring(0, 10));
+                                        onSubmit(_textController.text,
+                                            _amountController.text, _dateTime);
                                         Navigator.of(context).pop();
                                         _textController.clear();
                                       },
@@ -388,8 +375,13 @@ class _FreezerPageState extends State<FreezerPage> {
                                                                     "ExpDate") ==
                                                             null
                                                         ? 'No expiration date'
-                                                        : snapshot.data[index]
-                                                            .get("ExpDate")),
+                                                        : DateFormat(
+                                                                'MM/dd/yyyy')
+                                                            .format(snapshot
+                                                                .data[index]
+                                                                .get("ExpDate")
+                                                                .toDate())
+                                                            .toString()),
 
                                                     //Submit Button
                                                     InkWell(
