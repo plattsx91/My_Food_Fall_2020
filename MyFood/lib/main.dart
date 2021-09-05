@@ -1,5 +1,5 @@
 import 'package:MyFoodLogin/theme/approutes.dart';
-import 'package:MyFoodLogin/view/MainPage.dart';
+// import 'package:MyFoodLogin/view/MainPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import './view/Login.dart';
