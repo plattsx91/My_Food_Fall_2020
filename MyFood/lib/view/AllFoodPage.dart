@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:intl/intl.dart';
 
 class AllFoodPage extends StatefulWidget {
   AllFoodPage({Key key}) : super(key: key);
@@ -35,7 +34,7 @@ class _AllFoodPageState extends State<AllFoodPage> {
 
 //Function that is called when a new item is submitted.
 //Submits the new food item from the text controller to the current user and setting its type to freezer
-  onSubmit(String name, String amount, DateTime expdate) {
+  onSubmit(String name, String amount, String expdate) {
     final User user = auth.currentUser;
     final uid = user.uid;
     // print(date);
@@ -223,8 +222,12 @@ class _AllFoodPageState extends State<AllFoodPage> {
                                     //Submit Button
                                     InkWell(
                                       onTap: () {
-                                        onSubmit(_textController.text,
-                                            _amountController.text, _dateTime);
+                                        onSubmit(
+                                            _textController.text,
+                                            _amountController.text,
+                                            _dateTime
+                                                .toString()
+                                                .substring(0, 10));
                                         Navigator.of(context).pop();
                                         _textController.clear();
                                       },
@@ -365,13 +368,8 @@ class _AllFoodPageState extends State<AllFoodPage> {
                                                                     "ExpDate") ==
                                                             null
                                                         ? 'No expiration date'
-                                                        : DateFormat(
-                                                                'MM/dd/yyyy')
-                                                            .format(snapshot
-                                                                .data[index]
-                                                                .get("ExpDate")
-                                                                .toDate())
-                                                            .toString()),
+                                                        : snapshot.data[index]
+                                                            .get("ExpDate")),
 
                                                     //Submit Button
                                                     InkWell(
